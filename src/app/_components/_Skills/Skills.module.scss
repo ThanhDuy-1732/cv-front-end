@@ -1,0 +1,25 @@
+@import '@/app/_styles/variables.module.scss';
+
+.skills {
+  .skill-tabs {
+    :global {
+      .ant-tabs-tab {
+        &.ant-tabs-tab-active {
+          .ant-tabs-tab-btn {
+            color: $bright-green !important;
+          }
+        }
+
+        &:hover {
+          .ant-tabs-tab-btn {
+            color: $bright-green !important;
+          }
+        }
+      }
+
+      .ant-tabs-ink-bar {
+        background: $bright-green !important;
+      }
+    }
+  }
+}

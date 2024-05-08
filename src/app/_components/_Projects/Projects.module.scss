@@ -1,0 +1,45 @@
+@import '@/app/_styles/variables.module.scss';
+
+.projects {
+  .project__carousel {
+    :global {
+      .slick-prev {
+        &::before {
+          box-sizing: border-box;
+          position: absolute;
+          top: calc((16px - calc(16px / 1.414)) / 2);
+          inset-inline-start: calc((16px - calc(16px / 1.414)) / 2);
+          display: inline-block;
+          width: calc(16px / 1.414);
+          height: calc(16px / 1.414);
+          border: 0 solid currentcolor;
+          border-inline-width: 2px 0;
+          border-block-width: 2px 0;
+          border-radius: 1px;
+          content: "";
+          color: $bright-green;
+          transform: rotate(-45deg);
+        }
+      }
+
+      .slick-next {
+        &::before {
+          box-sizing: border-box;
+          position: absolute;
+          top: calc((16px - calc(16px / 1.414)) / 2);
+          inset-inline-start: calc((16px - calc(16px / 1.414)) / 2);
+          display: inline-block;
+          width: calc(16px / 1.414);
+          height: calc(16px / 1.414);
+          border: 0 solid currentcolor;
+          border-inline-width: 2px 0;
+          border-block-width: 2px 0;
+          border-radius: 1px;
+          content: "";
+          color: $bright-green;
+          transform: rotate(135deg);
+        }
+      }
+    }
+  }
+}

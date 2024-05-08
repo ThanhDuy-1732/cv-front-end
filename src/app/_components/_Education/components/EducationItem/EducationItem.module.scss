@@ -1,0 +1,9 @@
+@import '@/app/_styles/variables.module.scss';
+
+.education-item {
+  .education-item__container {
+    .content__title, .content__score {
+      font-weight: $font-semibold;
+    }
+  }
+}

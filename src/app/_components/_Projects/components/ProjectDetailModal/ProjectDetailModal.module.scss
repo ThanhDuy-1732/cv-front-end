@@ -1,0 +1,48 @@
+@import '@/app/_styles/variables.module.scss';
+
+.modal-header-custom {
+  :global {
+    .ant-modal-title {
+      font-size: 1.5rem !important;
+    }
+  }
+}
+
+.modal-footer-custom {
+  :global {
+    .ant-btn-primary {
+      background: $bright-green;
+
+      &:hover {
+        background: $box-shadow-1 !important;
+      }
+    }
+
+    .ant-btn-default {
+      &:hover {
+        color: $bright-green !important;
+        border-color: $bright-green !important;
+      }
+    }
+  }
+}
+
+.project-detail {
+  ul {
+    list-style: none;
+  }
+  
+  li {
+    display: flex;
+    align-items: flex-start;
+
+    a {
+      color: $bright-green;
+    }
+
+    .icon {
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+  }
+}

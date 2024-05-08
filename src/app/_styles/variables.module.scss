@@ -1,0 +1,31 @@
+$gray: #dddddd;
+$black: #000000;
+$white: #ffffff;
+$bright-green: #64e79e;
+$primary-color: #000000;
+
+$box-shadow-1: rgba(10, 234, 158, 0.4);
+$box-shadow-2: rgba(10, 234, 158, 0.3);
+$box-shadow-3: rgba(10, 234, 158, 0.2);
+$box-shadow-4: rgba(10, 234, 158, 0.1);
+$box-shadow-5: rgba(10, 234, 158, 0.05);
+
+$font-bold: 800;
+$font-semibold: 700;
+ 
+:export {
+  gray: $gray;
+  black: $black;
+  white: $white;
+  bright-green: $bright-green;
+  primary-color: $primary-color;
+
+  box-shadow-1: $box-shadow-1;
+  box-shadow-2: $box-shadow-2;
+  box-shadow-3: $box-shadow-3;
+  box-shadow-4: $box-shadow-4;
+  box-shadow-5: $box-shadow-5;
+  
+  font-bold: $font-bold;
+  font-semibold: $font-semibold;
+}

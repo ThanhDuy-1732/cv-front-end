@@ -1,0 +1,9 @@
+@import '@/app/_styles/variables.module.scss';
+
+.award-item {
+  .award-item__content {
+    .content__title {
+      font-weight: $font-semibold;
+    }
+  }
+}

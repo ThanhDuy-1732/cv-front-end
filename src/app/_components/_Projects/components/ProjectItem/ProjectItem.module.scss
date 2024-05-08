@@ -1,0 +1,17 @@
+@import '@/app/_styles/variables.module.scss';
+
+.project-item {
+  line-height: 10rem;
+  background-color: $box-shadow-1;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  .project-item__info {
+    gap: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,12 @@
+.content {
+  gap: 0.25rem;
+  display: flex;
+  font-size: 1rem;
+  flex-direction: column;
+
+  .content__title {
+    gap: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+}
