@@ -1,3 +1,7 @@
+// Utilities
+import { useContext } from 'react';
+import { OverviewsContext } from '@/app/_utils/_context';
+
 // Components
 import { GoGoal } from "react-icons/go";
 import { PiShootingStarThin } from "react-icons/pi";
@@ -6,10 +10,12 @@ import { PiShootingStarThin } from "react-icons/pi";
 import styles from './Overview.module.scss';
 import { Content, ContentTitle } from '@/app/_styles/common.styled';
 
-// Data
-import { OVERVIEW_DATA } from "@/app/_data/index";
+// Types
+import { OverviewData } from '@/app/_api/query-graphql';
 
 export default function Overview() {
+  const overview: OverviewData = useContext(OverviewsContext);
+
   return (
     <>
       <Content className={styles.overview}>
@@ -20,11 +26,11 @@ export default function Overview() {
 
         <ul>
           {
-            OVERVIEW_DATA.map((data, index) => {
+            overview.map((data, index) => {
               return (
                 <li key={`overview_${index}`}>
                   <PiShootingStarThin className={styles['li__icon']} />
-                  <div>{ data }</div>
+                  <div>{ data.value }</div>
                 </li>
               )
             })

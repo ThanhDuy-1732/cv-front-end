@@ -1,3 +1,7 @@
+// Utilities
+import { useContext } from 'react';
+import { EducationsContext } from '@/app/_utils/_context';
+
 // Components
 import { MdOutlineSchool } from "react-icons/md";
 import EducationItem from "./components/EducationItem/EducationItem";
@@ -6,10 +10,12 @@ import EducationItem from "./components/EducationItem/EducationItem";
 import styles from "./Education.module.scss";
 import { Content, ContentTitle } from '@/app/_styles/common.styled';
 
-// Data
-import { EDUCATION_DATA } from '@/app/_data/index';
+// Types
+import { EducationData } from '@/app/_api/query-graphql';
 
 export default function Education() {
+  const educations: EducationData = useContext(EducationsContext);
+
   return (
     <>
       <Content className={styles.education}>
@@ -19,7 +25,7 @@ export default function Education() {
         </ContentTitle>
 
         {
-          EDUCATION_DATA.map(education => {
+          educations.map(education => {
             return (
               <EducationItem key={education.title} education={education} />
             )

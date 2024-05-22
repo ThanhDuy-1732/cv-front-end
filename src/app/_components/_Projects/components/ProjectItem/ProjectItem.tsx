@@ -9,20 +9,26 @@ import { Tooltip } from 'antd';
 import styles from './ProjectItem.module.scss';
 
 // Types
-import { ProjectDataType } from '@/app/_data/index';
 import { ProjectReducerActionType } from '@/app/_utils/index';
+
+// APIs
+import { getProjectByQuery, Project as ProjectType } from '@/app/_api/index';
 
 type ProjectItemProps = {
   onOpenModal: () => void,
 }
 
+type ProjectTypeData = Pick<ProjectType, '_id' | 'name' | 'company' | 'mainTechs'>
+
 export default function ProjectItem({ onOpenModal } : ProjectItemProps) {
-  const project: ProjectDataType = useContext(ProjectContext) as ProjectDataType;
+  const project: ProjectTypeData = useContext(ProjectContext) as ProjectTypeData;
   const projectedDispatch: Dispatch<ProjectReducerActionType> = useContext(ProjectedDispatchContext);
 
-  const handleProjectClick = useCallback((project: ProjectDataType) => {
+  const handleProjectClick = useCallback(async (id: string) => {
+    const response = await getProjectByQuery(id);
+
     projectedDispatch({
-      project,
+      project: response.data.data.getProject,
       type: 'show',
     });
 
@@ -31,7 +37,7 @@ export default function ProjectItem({ onOpenModal } : ProjectItemProps) {
 
   return (
     <>
-      <div className={styles['project-item']} onClick={() => handleProjectClick(project)}>
+      <div className={styles['project-item']} onClick={() => handleProjectClick(project._id)}>
         <Tooltip title={`Click to view detail project ${project.name}`} overlayStyle={{ maxWidth: '100vw' }}>
           <div className={styles['project-item__info']}>
             <div>Project: { project.name }</div>

@@ -1,23 +1,40 @@
 // Utilities
-import { memo } from 'react';
+import { memo, useContext } from 'react';
+import { InformationContext } from '@/app/_utils/_context';
 
 // Components
 import Image from 'next/image';
 import { Col, Row } from 'antd';
 import Content from './components/Content';
+import { IoLogoGithub } from "react-icons/io";
+import { LiaBirthdayCakeSolid } from "react-icons/lia";
+import { CiPhone, CiLocationOn, CiMail } from "react-icons/ci";
 
 // Styles
 import styles from './Information.module.scss';
 
 // Types
+import { IconType } from "react-icons";
+import { InformationData } from '@/app/_api/query-graphql';
 export type InformationProps = {
   avatarURL: string,
 }
+export type Icons = {
+  [key: string]: IconType;
+}
 
 // Constants
-import { INFORMATION_DATA } from "@/app/_data/index";
+const ICONS: Icons = {
+  Email: CiMail,
+  Phone: CiPhone,
+  Github: IoLogoGithub,
+  Address: CiLocationOn,
+  DOB: LiaBirthdayCakeSolid,
+}
 
 const Information = memo(function Information({ avatarURL }: InformationProps) {
+  const information: InformationData = useContext(InformationContext);
+
   return (
     <>
       <div className={styles.information}>
@@ -30,9 +47,9 @@ const Information = memo(function Information({ avatarURL }: InformationProps) {
           <Col span={12}>
             <div className={styles['info__basic']}>
               {
-                INFORMATION_DATA.map((data, index) => {
+                information.map((data, index) => {
                   return (
-                    <Content key={`content_${index}`} title={data.title} content={data.content} icon={data.icon} />
+                    <Content key={`content_${index}`} title={data.title} content={data.content} icon={ICONS[data.title]} />
                   )
                 })
               }

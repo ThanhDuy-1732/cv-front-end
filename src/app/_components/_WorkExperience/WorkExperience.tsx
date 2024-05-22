@@ -1,3 +1,7 @@
+// Utilities
+import { useContext } from 'react';
+import { WorkExperiencesContext } from '@/app/_utils/_context';
+
 // Components
 import { MdOutlineMapsHomeWork } from "react-icons/md";
 import WorkExperienceItem from "./components/WorkExperienceItem/WorkExperienceItem";
@@ -6,10 +10,12 @@ import WorkExperienceItem from "./components/WorkExperienceItem/WorkExperienceIt
 import styles from './WorkExperience.module.scss';
 import { Content, ContentTitle } from '@/app/_styles/common.styled';
 
-// Data
-import { WORK_EXPERIENCE_DATA } from '@/app/_data/index';
+// Types
+import { WorkExperienceData } from '@/app/_api/query-graphql';
 
 export default function WorkExperience() {
+  const workExperiences: WorkExperienceData = useContext(WorkExperiencesContext);
+
   return (
     <>
       <Content className={styles['work-experience']}>
@@ -19,7 +25,7 @@ export default function WorkExperience() {
         </ContentTitle>
 
         {
-          WORK_EXPERIENCE_DATA.map(workExperience => {
+          workExperiences.map(workExperience => {
             return (
               <WorkExperienceItem key={workExperience.company} workExperience={workExperience} />
             )

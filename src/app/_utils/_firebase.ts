@@ -1,6 +1,6 @@
 // Utilities
 import "@/config/firebaseConfig";
-import { getDownloadURL, getStorage, listAll, ref } from "firebase/storage"
+import { getDownloadURL, getStorage, listAll, ref } from "firebase/storage";
 
 const storage = getStorage();
 

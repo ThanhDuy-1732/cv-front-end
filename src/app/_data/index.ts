@@ -202,7 +202,7 @@ export const PROJECTS_DATA: ProjectDataType[] = [
     responsibilitiesAndAchievement: [
       "Developer",
       "Requirements analysis",
-      "Archievement: Improve UI and UX for some the old features and implement new features ",
+      "Achievement: Improve UI and UX for some the old features and implement new features",
     ],
     mainTechs: ['Javascript', 'VueJS (Vue2)'],
     technologyInUse: [
@@ -304,7 +304,7 @@ export const PROJECTS_DATA: ProjectDataType[] = [
     description: "My CV Online",
     url: ['https://cv-front-end.web.app/'],
     numberOfMember: 1,
-    position: 'Fullstack Developer',
+    position: 'Full-Stack Developer',
     responsibilitiesAndAchievement: [
       "Developer",
       "Design UI"
