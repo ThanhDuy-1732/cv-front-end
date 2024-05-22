@@ -4,7 +4,7 @@ import { InformationContext } from '@/app/_utils/_context';
 
 // Components
 import Image from 'next/image';
-import { Col, Row } from 'antd';
+import { Col, Row, Skeleton } from 'antd';
 import Content from './components/Content';
 import { IoLogoGithub } from "react-icons/io";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
@@ -43,23 +43,34 @@ const Information = memo(function Information({ avatarURL }: InformationProps) {
           <i className={styles['general__title']}>Software Developer</i>
         </div>
 
-        <Row className={styles['information__info']}>
-          <Col span={12}>
-            <div className={styles['info__basic']}>
-              {
-                information.map((data, index) => {
-                  return (
-                    <Content key={`content_${index}`} title={data.title} content={data.content} icon={ICONS[data.title]} />
-                  )
-                })
-              }
-            </div>
-          </Col>
+        {
+          information.length ?
+          (
+            <Row className={styles['information__info']}>
+              <Col span={12}>
+                <div className={styles['info__basic']}>
+                  {
+                    information.map((data, index) => {
+                      return (
+                        <Content key={`content_${index}`} title={data.title} content={data.content} icon={ICONS[data.title]} />
+                      )
+                    })
+                  }
+                </div>
+              </Col>
 
-          <Col span={12} className={styles['info__avatar']}>
-            <Image src={avatarURL} width={250} height={250} className={styles['avatar__image']} alt='Ha Thanh Duy' />
-          </Col>
-        </Row>
+              <Col span={12} className={styles['info__avatar']}>
+                {
+                  avatarURL.length ?
+                  <Image src={avatarURL} width={250} height={250} className={styles['avatar__image']} alt='Ha Thanh Duy' /> :
+                  <Skeleton />  
+                }
+              </Col>
+            </Row>
+          ) : (
+            <Skeleton />
+          )
+        }
       </div>
     </>
   );

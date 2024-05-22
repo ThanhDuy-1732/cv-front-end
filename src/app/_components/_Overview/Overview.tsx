@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { OverviewsContext } from '@/app/_utils/_context';
 
 // Components
+import { Skeleton } from 'antd';
 import { GoGoal } from "react-icons/go";
 import { PiShootingStarThin } from "react-icons/pi";
 
@@ -24,18 +25,25 @@ export default function Overview() {
           <div>Overview</div>
         </ContentTitle>
 
-        <ul>
-          {
-            overview.map((data, index) => {
-              return (
-                <li key={`overview_${index}`}>
-                  <PiShootingStarThin className={styles['li__icon']} />
-                  <div>{ data.value }</div>
-                </li>
-              )
-            })
-          }
-        </ul>
+        {
+          overview.length ?
+          (
+            <ul>
+              {
+                overview.map((data, index) => {
+                  return (
+                    <li key={`overview_${index}`}>
+                      <PiShootingStarThin className={styles['li__icon']} />
+                      <div>{ data.value }</div>
+                    </li>
+                  )
+                })
+              }
+            </ul>
+          ) : (
+            <Skeleton />
+          )
+        }
       </Content>
     </>
   )

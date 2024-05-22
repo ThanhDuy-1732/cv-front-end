@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { WorkExperiencesContext } from '@/app/_utils/_context';
 
 // Components
+import { Skeleton } from 'antd';
 import { MdOutlineMapsHomeWork } from "react-icons/md";
 import WorkExperienceItem from "./components/WorkExperienceItem/WorkExperienceItem";
 
@@ -25,11 +26,17 @@ export default function WorkExperience() {
         </ContentTitle>
 
         {
-          workExperiences.map(workExperience => {
-            return (
-              <WorkExperienceItem key={workExperience.company} workExperience={workExperience} />
-            )
-          })
+          workExperiences.length ?
+          (
+            workExperiences.map(workExperience => {
+              return (
+                <WorkExperienceItem key={workExperience.company} workExperience={workExperience} />
+              )
+            })
+          ) :
+          (
+            <Skeleton />
+          )
         }
       </Content>
     </>

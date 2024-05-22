@@ -1,6 +1,6 @@
 // Utilities
 import { Dispatch, useContext, useCallback } from 'react';
-import { ProjectContext, ProjectedDispatchContext } from '@/app/_utils/index';
+import { ProjectContext, ProjectedDispatchContext, LoadingDispatchContext, LoadingReducerActionType } from '@/app/_utils/index';
 
 // Components
 import { Tooltip } from 'antd';
@@ -22,18 +22,38 @@ type ProjectTypeData = Pick<ProjectType, '_id' | 'name' | 'company' | 'mainTechs
 
 export default function ProjectItem({ onOpenModal } : ProjectItemProps) {
   const project: ProjectTypeData = useContext(ProjectContext) as ProjectTypeData;
+  const loadingDispatch: Dispatch<LoadingReducerActionType> = useContext(LoadingDispatchContext);
   const projectedDispatch: Dispatch<ProjectReducerActionType> = useContext(ProjectedDispatchContext);
 
   const handleProjectClick = useCallback(async (id: string) => {
-    const response = await getProjectByQuery(id);
-
-    projectedDispatch({
-      project: response.data.data.getProject,
-      type: 'show',
-    });
-
-    onOpenModal();
-  }, [projectedDispatch, onOpenModal]);
+    try {
+      loadingDispatch({
+        type: 'set',
+        value: {
+          value: true,
+          stack: 1,
+        }
+      })
+      const response = await getProjectByQuery(id);
+  
+      projectedDispatch({
+        project: response.data.data.getProject,
+        type: 'show',
+      });
+  
+      onOpenModal();
+    } catch (error: any) {
+      console.error('Project Item error', error);
+    } finally {
+      loadingDispatch({
+        type: 'set',
+        value: {
+          value: false,
+          stack: 1,
+        }
+      })
+    }
+  }, [projectedDispatch, onOpenModal, loadingDispatch]);
 
   return (
     <>

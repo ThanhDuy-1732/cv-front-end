@@ -3,8 +3,8 @@ import { useContext } from 'react';
 import { SkillsContext } from '@/app/_utils/_context';
 
 // Components
-import { Tabs, ConfigProvider } from 'antd';
 import { FaCode } from "react-icons/fa";
+import { Tabs, ConfigProvider, Skeleton } from 'antd';
 import SkillItem from "./components/SkillItem/SkillItem";
 
 // Styles
@@ -25,22 +25,29 @@ export default function Skills() {
           Skills
         </ContentTitle>
 
-        <ConfigProvider
-          tabs={{ className: styles['skill-tabs'] }}
-        >
-        <Tabs
-          defaultActiveKey='1'
-          items={
-            skills.map(skills => {
-              return {
-                key: skills.type,
-                label: skills.type,
-                children: <SkillItem skills={skills.skills} />
+        {
+          skills.length ?
+          (
+            <ConfigProvider
+              tabs={{ className: styles['skill-tabs'] }}
+            >
+            <Tabs
+              defaultActiveKey='1'
+              items={
+                skills.map(skills => {
+                  return {
+                    key: skills.type,
+                    label: skills.type,
+                    children: <SkillItem skills={skills.skills} />
+                  }
+                })
               }
-            })
-          }
-        />
-        </ConfigProvider>
+            />
+            </ConfigProvider>
+          ) : (
+            <Skeleton />
+          )
+        }
       </Content>
     </>
   )

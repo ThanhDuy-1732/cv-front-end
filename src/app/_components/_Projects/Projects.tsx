@@ -4,7 +4,7 @@ import { ProjectContext, projectReducer, ProjectedDispatchContext, ProjectsConte
 
 // Components
 import { FaLaptopCode } from "react-icons/fa6";
-import { Carousel, ConfigProvider } from 'antd';
+import { Carousel, ConfigProvider, Skeleton } from 'antd';
 import ProjectItem from "./components/ProjectItem/ProjectItem";
 import ProjectDetailModal from "./components/ProjectDetailModal/ProjectDetailModal";
 
@@ -42,23 +42,30 @@ export default function Projects() {
           Projects
         </ContentTitle>
 
-        <ProjectedDispatchContext.Provider value={dispatch}>
-          <ConfigProvider carousel={{ className: styles['project__carousel'] }}>
-            <Carousel arrows>
-              {
-                projects.map((project, index) => {
-                  return (
-                    <ProjectContext.Provider key={`project_context_${project.name}_${index}`} value={project}>
-                      <ProjectItem key={`project_item_${project.name}_${index}`} onOpenModal={handleOpenModal} />
-                    </ProjectContext.Provider>
-                  )
-                })
-              }
-            </Carousel>
-          </ConfigProvider>
+        {
+          projects.length ?
+          (
+            <ProjectedDispatchContext.Provider value={dispatch}>
+              <ConfigProvider carousel={{ className: styles['project__carousel'] }}>
+                <Carousel arrows>
+                  {
+                    projects.map((project, index) => {
+                      return (
+                        <ProjectContext.Provider key={`project_context_${project.name}_${index}`} value={project}>
+                          <ProjectItem key={`project_item_${project.name}_${index}`} onOpenModal={handleOpenModal} />
+                        </ProjectContext.Provider>
+                      )
+                    })
+                  }
+                </Carousel>
+              </ConfigProvider>
 
-          <ProjectDetailModal project={selectedProject} isOpenModal={isOpenModal} onConfirm={handleCloseModal} onCancel={handleCloseModal} />
-        </ProjectedDispatchContext.Provider>
+              <ProjectDetailModal project={selectedProject} isOpenModal={isOpenModal} onConfirm={handleCloseModal} onCancel={handleCloseModal} />
+            </ProjectedDispatchContext.Provider>
+          ) : (
+            <Skeleton />
+          )
+        }
       </Content>
     </>
   );

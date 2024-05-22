@@ -1,10 +1,13 @@
 'use client';
 
 // Utilities
-import { useState ,useEffect } from "react";
+import { loadingReducer } from '@/app/_utils/_reducer';
+import { useState ,useEffect, useReducer } from "react";
 import { getFileURL, getRefFile } from "./_utils/index";
+import { loadingContextType, LoadingDispatchContext } from '@/app/_utils/_context';
 
 // Components
+import { Spin } from 'antd';
 import Awards from "./_components/_Awards/Awards";
 import Skills from "./_components/_Skills/Skills";
 import Overview from "./_components/_Overview/Overview";
@@ -43,21 +46,20 @@ import {
 } from '@/app/_api/index';
 
 export default function Home() {
-
   const [awards, setAwards] = useState<AwardData>([]);
   const [skills, setSkills] = useState<SkillData>([]);
+  const [avatarURL, setAvatarURL] = useState<string>('');
   const [overview, setOverview] = useState<OverviewData>([]);
   const [projects, setProjects] = useState<ProjectsData>([]);
   const [education, setEducation] = useState<EducationData>([]);
   const [information, setInformation] = useState<InformationData>([]);
   const [workExperience, setWorkExperience] = useState<WorkExperienceData>([]);
-  const [avatarURL, setAvatarURL] = useState<string>('https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg');
+  
+  const [loading, dispatch] = useReducer(loadingReducer, { value: false, stack: 0 } as loadingContextType);
 
   useEffect(() => {
     const getAvatar = async () => {
-      const url = await getFileURL(getRefFile('images/avatar.jpg'));
-
-      const [awardData, skillData, projectsData, overviewData, educationData, informationData, workExperienceData] = await Promise.all([
+      const [awardData, skillData, projectsData, overviewData, educationData, informationData, workExperienceData, url] = await Promise.all([
         getAllAwardByQuery(),
         getAllSkillByQuery(),
         getAllProjectByQuery(),
@@ -65,6 +67,8 @@ export default function Home() {
         getAllEducationByQuery(),
         getAllInformationByQuery(),
         getAllWorkExperienceByQuery(),
+
+        getFileURL(getRefFile('images/avatar.jpg')),
       ]);
 
       setAwards(awardData.data.data.getAllAward);
@@ -83,49 +87,53 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <Wrapper className={styles.wrapper}>
-        <Container>
-          <InformationContext.Provider value={information}>
-            <Information avatarURL={avatarURL}/>
-          </InformationContext.Provider>
-        </Container>
+      <LoadingDispatchContext.Provider value={dispatch}>
+        <Wrapper className={styles.wrapper}>
+          <Container>
+            <InformationContext.Provider value={information}>
+              <Information avatarURL={avatarURL}/>
+            </InformationContext.Provider>
+          </Container>
 
-        <Container>
-          <OverviewsContext.Provider value={overview}>
-            <Overview/>
-          </OverviewsContext.Provider>
-        </Container>
-        
-        <Container>
-          <EducationsContext.Provider value={education}>
-            <Education/>
-          </EducationsContext.Provider>
-        </Container>
+          <Container>
+            <OverviewsContext.Provider value={overview}>
+              <Overview/>
+            </OverviewsContext.Provider>
+          </Container>
+          
+          <Container>
+            <EducationsContext.Provider value={education}>
+              <Education/>
+            </EducationsContext.Provider>
+          </Container>
 
-        <Container>
-          <WorkExperiencesContext.Provider value={workExperience}>
-            <WorkExperience/>
-          </WorkExperiencesContext.Provider>
-        </Container>
-        
-        <Container>
-          <AwardsContext.Provider value={awards}>
-            <Awards/>
-          </AwardsContext.Provider>
-        </Container>
-        
-        <Container>
-          <SkillsContext.Provider value={skills}>
-            <Skills/>
-          </SkillsContext.Provider>
-        </Container>
-        
-        <Container>
-          <ProjectsContext.Provider value={projects}>
-            <Projects/>
-          </ProjectsContext.Provider>
-        </Container>
-      </Wrapper>
+          <Container>
+            <WorkExperiencesContext.Provider value={workExperience}>
+              <WorkExperience/>
+            </WorkExperiencesContext.Provider>
+          </Container>
+          
+          <Container>
+            <AwardsContext.Provider value={awards}>
+              <Awards/>
+            </AwardsContext.Provider>
+          </Container>
+          
+          <Container>
+            <SkillsContext.Provider value={skills}>
+              <Skills/>
+            </SkillsContext.Provider>
+          </Container>
+          
+          <Container>
+            <ProjectsContext.Provider value={projects}>
+              <Projects/>
+            </ProjectsContext.Provider>
+          </Container>
+        </Wrapper>
+
+        <Spin spinning={loading.value} fullscreen />
+      </LoadingDispatchContext.Provider>
     </main>
   );
 }

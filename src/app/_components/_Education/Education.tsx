@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { EducationsContext } from '@/app/_utils/_context';
 
 // Components
+import { Skeleton } from 'antd';
 import { MdOutlineSchool } from "react-icons/md";
 import EducationItem from "./components/EducationItem/EducationItem";
 
@@ -25,11 +26,17 @@ export default function Education() {
         </ContentTitle>
 
         {
-          educations.map(education => {
-            return (
-              <EducationItem key={education.title} education={education} />
-            )
-          })
+          educations.length ?
+          (
+            educations.map(education => {
+              return (
+                <EducationItem key={education.title} education={education} />
+              )
+            })  
+          ) :
+          (
+            <Skeleton />
+          )
         }
       </Content>
     </>
