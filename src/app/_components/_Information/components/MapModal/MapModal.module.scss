@@ -1,0 +1,33 @@
+@import '@/app/_styles/variables.module.scss';
+
+.modal-header-custom {
+  :global {
+    .ant-modal-title {
+      font-size: 1.5rem !important;
+    }
+  }
+}
+
+.modal-footer-custom {
+  :global {
+    .ant-btn-primary {
+      background: $bright-green;
+
+      &:hover {
+        background: $box-shadow-1 !important;
+      }
+    }
+
+    .ant-btn-default {
+      &:hover {
+        color: $bright-green !important;
+        border-color: $bright-green !important;
+      }
+    }
+  }
+}
+
+.map {
+  width: 100%;
+  height: 50vh;
+}

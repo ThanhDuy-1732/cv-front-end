@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 
 // Components
-import { Modal } from 'antd';
+import { Modal, Button } from 'antd';
 import { TiInfoLargeOutline } from "react-icons/ti";
 
 // Styles
@@ -32,6 +32,12 @@ export default function ProjectDetailModal({ project, isOpenModal, onConfirm, on
 
         onOk={onConfirm} 
         onCancel={onCancel}
+
+        footer={[
+          <Button key="back" onClick={onCancel}>
+            Close
+          </Button>
+        ]}
       >
         <ContentItemContainer className={styles['project-detail']}>
           <div>{ project.company ? (<><b>Company:</b> {project.company}</>) : <b>Personal Project</b> }</div>

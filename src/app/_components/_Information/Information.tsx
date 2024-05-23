@@ -1,12 +1,13 @@
 // Utilities
-import { memo, useContext } from 'react';
 import { InformationContext } from '@/app/_utils/_context';
+import { memo, useContext, useCallback, useState, useMemo } from 'react';
 
 // Components
 import Image from 'next/image';
 import { Col, Row, Skeleton } from 'antd';
 import Content from './components/Content';
 import { IoLogoGithub } from "react-icons/io";
+import MapModel from './components/MapModal/MapModal';
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
 import { CiPhone, CiLocationOn, CiMail } from "react-icons/ci";
 
@@ -23,6 +24,8 @@ export type Icons = {
   [key: string]: IconType;
 }
 
+export type InfoType = 'Email' | 'Phone' | 'Github' | 'Address' | 'DOB';
+
 // Constants
 const ICONS: Icons = {
   Email: CiMail,
@@ -33,7 +36,40 @@ const ICONS: Icons = {
 }
 
 const Information = memo(function Information({ avatarURL }: InformationProps) {
+  const title = useMemo((): string => {
+    return 'Address Location';
+  }, []);
+  const location = useMemo((): { lng: number, lat: number } => {
+    return {
+      lat: 10.83282911,
+      lng: 106.6683123,
+    }
+  }, []);
+  const [mapVisible, setMapVisible] = useState<boolean>(false);
   const information: InformationData = useContext(InformationContext);
+
+  const handleCloseMap = useCallback((): void => {
+    setMapVisible(false);
+  }, [setMapVisible])
+
+  const handleInfoClick = useCallback(({ type, value }: { type: InfoType, value: string }): void => {
+    switch (type) {
+      case 'Email':
+        window.location.href = `mailto:${value}`;
+        break;
+      case 'Phone':
+        window.open(`tel:${value}`)
+        break;
+      case 'Github':
+        window.open(value);
+        break;
+      case 'Address':
+        setMapVisible(true);
+        break;;
+      default:
+        break;
+    }
+  }, []);
 
   return (
     <>
@@ -52,7 +88,7 @@ const Information = memo(function Information({ avatarURL }: InformationProps) {
                   {
                     information.map((data, index) => {
                       return (
-                        <Content key={`content_${index}`} title={data.title} content={data.content} icon={ICONS[data.title]} />
+                        <Content key={`content_${index}`} title={data.title as InfoType} content={data.content} icon={ICONS[data.title]} itemClick={handleInfoClick} />
                       )
                     })
                   }
@@ -72,6 +108,8 @@ const Information = memo(function Information({ avatarURL }: InformationProps) {
           )
         }
       </div>
+
+      <MapModel title={title} location={location} visible={mapVisible} handleCancel={handleCloseMap} />
     </>
   );
 })

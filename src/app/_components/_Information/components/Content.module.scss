@@ -4,6 +4,10 @@
   font-size: 1rem;
   flex-direction: column;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   .content__title {
     gap: 0.5rem;
     display: flex;

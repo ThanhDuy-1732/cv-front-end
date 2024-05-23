@@ -104,6 +104,7 @@ export const getProject = `
     getProject(id: $id) {
       name
       url
+      time
       company
       position
       mainTechs
